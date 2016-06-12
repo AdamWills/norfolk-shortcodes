@@ -142,4 +142,80 @@ class Norfolk_Shortcodes_Public {
 		return $returntext;
 	}
 
+	public function layout_row( $atts, $content = null) {
+		return '<div class="row">' . do_shortcode( $content ) . '</div>';
+	}
+
+	public function layout_one_third( $atts, $content = null ) {
+		return '<div class="col-sm-4">' . do_shortcode($content) . '</div>';
+	}
+
+	public function layout_two_third( $atts, $content = null ) {
+		return '<div class="col-sm-8">' . do_shortcode($content) . '</div>';
+	}
+
+	public function layout_one_half( $atts, $content = null ) {
+		return '<div class="col-sm-6">' . do_shortcode($content) . '</div>';
+	}
+
+	public function layout_one_quarter( $atts, $content = null ) {
+		return '<div class="col-sm-3">' . do_shortcode($content) . '</div>';
+	}
+
+	public function layout_three_quarters( $atts, $content = null ) {
+		return '<div class="col-sm-9">' . do_shortcode($content) . '</div>';
+	}
+
+	public function list_accessibles($atts) {
+		extract( shortcode_atts( array(
+				'accessible' => false,
+				'bathroom' => false,
+				'class-norfolk-shortcodes-public.phpmoking' => false,
+				'parking' => false,
+				'pets' => false),$atts));
+				
+		$string = "<ul class='accessible_list'>";
+		if($accessible)
+			$string.= '<li><img src="'. get_bloginfo("siteurl").'/wp-content/images/accessible.png" alt="' . __('Accessible Location', $this->plugin_name ) . '" /></li>';
+		if($bathroom)
+			$string.= '<li><img src="'. get_bloginfo("siteurl").'/wp-content/images/bathroom.png" alt="' . __('Bathroom Available', $this->plugin_name ) . '" class="access_icon" /></li>';
+		if($parking)
+			$string.= '<li><img src="'. get_bloginfo("siteurl").'/wp-content/images/parking.png" alt="' . __('Parking Available', $this->plugin_name ) . '" class="access_icon" /></li>';
+		if($pets)
+			$string.= '<li><img src="'. get_bloginfo("siteurl").'/wp-content/images/pets.png" alt="' . __('Pets Allowed', $this->plugin_name ) . '" class="access_icon" /></li>';
+		if($string=="<ul class='accessible_list'>")
+			return false;
+		else {
+			$string.="</ul>";
+			return $string;
+		}
+	}
+
+	public function show_css_map( $atts, $content = null ) {
+		return '<iframe src="http://mapsengine.google.com/map/embed?mid=zGbM0wbBx1cM.ku4RzdU5efu4" width="580" height="460"></iframe>';
+	}
+
+	
+	function show_surplus_properties( $atts, $content = null ) {
+		
+		$args = array( 
+			'post_type' => 'surplus-properties'
+		);
+		$the_query = new WP_Query( $args );
+
+		if ( $the_query->have_posts() ) :
+			$listing = '<table class="table" id="bidding_table">';
+			$listing.= '<thead><tr><th>' . __( "Property Address", $this->plugin_name ) . '</th><th>' . __( "Listing Date", $this->plugin_name ) . '</th></tr></thead>';
+			while ( $the_query->have_posts() ) : $the_query->the_post();
+				$listing.='<tr><td><a href="'.get_permalink().'">'. get_the_title() .'</a></td><td>'.get_post_meta(get_the_ID(),"_refactord-datepicker",true).'</td>\n';
+			endwhile; 
+			$listing.='</table>';
+		else: 
+			$listing = '<p>'. __( 'There are no surplus properties listed at this time.', $this->plugin_name ) .'</p>';
+		endif;
+		
+		wp_reset_query(); 
+		return $listing;
+	}
+	
 }

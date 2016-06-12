@@ -171,6 +171,19 @@ class Norfolk_Shortcodes {
 		$this->loader->add_shortcode( 'dabaddress', $plugin_public, 'show_dab_address' );
 		$this->loader->add_shortcode( 'labaddress', $plugin_public, 'show_lab_address' );
 
+		$this->loader->add_shortcode( 'row', $plugin_public, 'layout_row' );
+		$this->loader->add_shortcode( 'one_third', $plugin_public, 'layout_one_third' );
+		$this->loader->add_shortcode( 'two_third', $plugin_public, 'layout_two_third' );
+		$this->loader->add_shortcode( 'one_half', $plugin_public, 'layout_one_half' );
+		$this->loader->add_shortcode( 'one_quarter', $plugin_public, 'layout_one_quarter' );
+		$this->loader->add_shortcode( 'three_quarters', $plugin_public, 'layout_three_quarters' );
+
+		$this->loader->add_shortcode( 'accessibles',$plugin_public, 'list_accessibles' );
+
+		$this->loader->add_shortcode( 'cssmap', $plugin_public, 'show_css_map' );
+
+		$this->loader->add_shortcode( 'showsurplusproperties', $plugin_public, 'show_surplus_properties' );
+
 		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
