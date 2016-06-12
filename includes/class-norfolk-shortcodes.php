@@ -168,6 +168,8 @@ class Norfolk_Shortcodes {
 		$plugin_public = new Norfolk_Shortcodes_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_shortcode( 'cabaddress', $plugin_public, 'show_cab_address' );
+		$this->loader->add_shortcode( 'dabaddress', $plugin_public, 'show_dab_address' );
+		$this->loader->add_shortcode( 'labaddress', $plugin_public, 'show_lab_address' );
 
 		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
