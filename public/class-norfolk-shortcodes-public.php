@@ -100,6 +100,11 @@ class Norfolk_Shortcodes_Public {
 
 	}
 
+	public function convert_email( $atts, $email = null ) {
+		$email = antispambot($email);
+		return "<a href=\"mailto:$email\">$email</a>";
+	}
+
 	public function show_cab_address() {
 		$returntext = '<p>';
 		$returntext .= '<b>' . __( 'County Administration Building', $this->plugin_name ) . '</b><br/>';
@@ -142,7 +147,7 @@ class Norfolk_Shortcodes_Public {
 		return $returntext;
 	}
 
-	public function layout_row( $atts, $content = null) {
+	public function layout_row( $atts, $content = null ) {
 		return '<div class="row">' . do_shortcode( $content ) . '</div>';
 	}
 

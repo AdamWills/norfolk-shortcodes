@@ -167,6 +167,8 @@ class Norfolk_Shortcodes {
 
 		$plugin_public = new Norfolk_Shortcodes_Public( $this->get_plugin_name(), $this->get_version() );
 
+		$this->loader->add_shortcode( 'email', $plugin_public, 'convert_email' );
+
 		$this->loader->add_shortcode( 'cabaddress', $plugin_public, 'show_cab_address' );
 		$this->loader->add_shortcode( 'dabaddress', $plugin_public, 'show_dab_address' );
 		$this->loader->add_shortcode( 'labaddress', $plugin_public, 'show_lab_address' );
