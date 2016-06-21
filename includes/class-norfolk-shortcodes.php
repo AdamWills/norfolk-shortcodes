@@ -185,6 +185,7 @@ class Norfolk_Shortcodes {
 		$this->loader->add_shortcode( 'cssmap', $plugin_public, 'show_css_map' );
 
 		$this->loader->add_shortcode( 'showsurplusproperties', $plugin_public, 'show_surplus_properties' );
+		$this->loader->add_shortcode( 'showbiddingops', $plugin_public, 'show_bidding_opportunities' );
 
 		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );

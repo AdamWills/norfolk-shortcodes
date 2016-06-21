@@ -201,7 +201,7 @@ class Norfolk_Shortcodes_Public {
 	}
 
 	
-	function show_surplus_properties( $atts, $content = null ) {
+	public function show_surplus_properties( $atts, $content = null ) {
 		
 		$args = array( 
 			'post_type' => 'surplus-properties'
@@ -219,6 +219,26 @@ class Norfolk_Shortcodes_Public {
 			$listing = '<p>'. __( 'There are no surplus properties listed at this time.', $this->plugin_name ) .'</p>';
 		endif;
 		
+		wp_reset_query(); 
+		return $listing;
+	}
+
+	public function filter_where( $where='' ){
+		$where .= " AND post_date > '" . date('Y-m-d', strtotime('-500 days')) . "'";
+		return $where;
+	}
+
+	public function show_bidding_opportunities() {
+		$listing="<table class=\"table\" id=\"bidding_table\"><thead>";
+		$listing.="<tr><th>Document Number</th><th>Document Name</th><th>Closing Date</th></tr>";
+		$listing.="</thead>";
+	    add_filter('posts_where', array(&$this, 'filter_where'));
+		$args = array( 'post_type' => 'bidding', 'posts_per_page'=>'100');
+	    query_posts($args);
+	    while ( have_posts() ) : the_post();
+	    	$listing.="<tr><td>". get_post_meta(get_the_ID(),"_docnum",true)."</td><td><a href=\"".get_permalink()."\">". get_the_title() ."</a></td><td>".get_post_meta(get_the_ID(),"_refactord-datepicker",true)."</td>\n";
+	  	endwhile; 
+		$listing.="</table>";
 		wp_reset_query(); 
 		return $listing;
 	}
