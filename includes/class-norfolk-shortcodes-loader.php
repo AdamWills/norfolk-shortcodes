@@ -50,6 +50,7 @@ class Norfolk_Shortcodes_Loader {
 
 		$this->actions = array();
 		$this->filters = array();
+		$this->shortcodes = array();
 
 	}
 
@@ -90,7 +91,7 @@ class Norfolk_Shortcodes_Loader {
 	 * @param     string        $callback       The name of the function that defines the shortcode.
 	 */
 	public function add_shortcode( $tag, $component, $callback) {
-		$this->shortcodes = $this->add( $this->shortcodes, $tag, $component, $callback );
+		$this->shortcodes = $this->add( $this->shortcodes, $tag, $component, $callback, null, null );
 	}
 
 	/**
