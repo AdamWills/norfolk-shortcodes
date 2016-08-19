@@ -95,8 +95,9 @@ class Norfolk_Shortcodes_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/norfolk-shortcodes-public.js', array( 'jquery' ), $this->version, false );
+		if ( is_page( 'directory' ) ) {
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/norfolk-shortcodes-public.js', array( 'jquery' ), $this->version, false );
+		}
 
 	}
 
@@ -115,7 +116,7 @@ class Norfolk_Shortcodes_Public {
 		$returntext .= __( 'Fax', $this->plugin_name ) . ':' . __( '519-426-8573', $this->plugin_name ) . '<br/><br/>';
 		// Let's attach the google maps link for this location
 		$returntext .= '<a title="' . __('View Map', $this->plugin_name ) . '" class="linkbutton" href="http://maps.google.com/maps?q=50+Colborne+Street+South,+Simcoe,+Ontario,+Canada&amp;hl=en&amp;ll=42.836325,-80.306282&amp;spn=0.013186,0.01929&amp;sll=42.633959,-83.188477&amp;sspn=13.541412,19.753418&amp;vpsrc=6&amp;z=16">' . __( 'View Map', $this->plugin_name ) . '<span class="sr-only"> ' . __('of', $this->plugin_name) . ' ' . __( 'County Administration Building', $this->plugin_name ) . '</span></a>';
-		$returntext .= '</p>';	
+		$returntext .= '</p>';
 		return $returntext;
 	}
 
@@ -129,7 +130,7 @@ class Norfolk_Shortcodes_Public {
 		$returntext .= __( 'Fax', $this->plugin_name ) . ':' . __( '519-582-4571', $this->plugin_name ) . '<br/><br/>';
 		// Let's attach the google maps link for this location
 		$returntext .= '<a title="' . __('View Map', $this->plugin_name ) . '" class="linkbutton" href="http://maps.google.com/maps?q=183+Main+Steet,+Delhi,+Ontario,+Canada,+n4b+2m3&hl=en&ll=42.854905,-80.49983&spn=0.013182,0.01929&sll=42.854583,-80.498403&sspn=0.006591,0.009645&vpsrc=6&z=16">' . __( 'View Map', $this->plugin_name ) . '<span class="sr-only"> ' . __( 'of', $this->plugin_name ) . ' ' . __( 'Delhi Administration Building', $this->plugin_name ) . '</span></a>';
-		$returntext .= '</p>';	
+		$returntext .= '</p>';
 		return $returntext;
 	}
 
@@ -143,7 +144,7 @@ class Norfolk_Shortcodes_Public {
 		$returntext .= __( 'Fax', $this->plugin_name ) . ':' . __( '519-875-4789', $this->plugin_name ) . '<br/><br/>';
 		// Lets attach the google maps link for this location
 		$returntext .= '<a title="' . __('View Map', $this->plugin_name ) . '" class="linkbutton" href="https://www.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Norfolk+County+-+Langton+Administration+Building&aq=&sll=42.74035,-80.579804&sspn=0.013474,0.033023&vpsrc=0&g=Norfolk+County+-+Langton%E2%80%A6&ie=UTF8&hq=administration+building&hnear=Langton,+Haldimand+County,+Ontario,+Canada&t=m&z=17&iwloc=A&cid=3360565729316502194">' . __('View Map', $this->plugin_name ) . '<span class="sr-only"> ' . __( 'of', $this->plugin_name ) . ' ' . __( 'Langton Administration Building', $this->plugin_name ) . '</span></a>';
-		$returntext .= '</p>';	
+		$returntext .= '</p>';
 		return $returntext;
 	}
 
@@ -178,7 +179,7 @@ class Norfolk_Shortcodes_Public {
 				'class-norfolk-shortcodes-public.phpmoking' => false,
 				'parking' => false,
 				'pets' => false),$atts));
-				
+
 		$string = "<ul class='accessible_list'>";
 		if($accessible)
 			$string.= '<li><img src="'. get_bloginfo("siteurl").'/wp-content/images/accessible.png" alt="' . __('Accessible Location', $this->plugin_name ) . '" /></li>';
@@ -200,10 +201,10 @@ class Norfolk_Shortcodes_Public {
 		return '<iframe src="http://mapsengine.google.com/map/embed?mid=zGbM0wbBx1cM.ku4RzdU5efu4" width="580" height="460"></iframe>';
 	}
 
-	
+
 	public function show_surplus_properties( $atts, $content = null ) {
-		
-		$args = array( 
+
+		$args = array(
 			'post_type' => 'surplus-properties'
 		);
 		$the_query = new WP_Query( $args );
@@ -213,13 +214,13 @@ class Norfolk_Shortcodes_Public {
 			$listing.= '<thead><tr><th>' . __( "Property Address", $this->plugin_name ) . '</th><th>' . __( "Listing Date", $this->plugin_name ) . '</th></tr></thead>';
 			while ( $the_query->have_posts() ) : $the_query->the_post();
 				$listing.='<tr><td><a href="'.get_permalink().'">'. get_the_title() .'</a></td><td>'.get_post_meta(get_the_ID(),"_refactord-datepicker",true).'</td>\n';
-			endwhile; 
+			endwhile;
 			$listing.='</table>';
-		else: 
+		else:
 			$listing = '<p>'. __( 'There are no surplus properties listed at this time.', $this->plugin_name ) .'</p>';
 		endif;
-		
-		wp_reset_query(); 
+
+		wp_reset_query();
 		return $listing;
 	}
 
@@ -237,10 +238,83 @@ class Norfolk_Shortcodes_Public {
 	    query_posts($args);
 	    while ( have_posts() ) : the_post();
 	    	$listing.="<tr><td>". get_post_meta(get_the_ID(),"_docnum",true)."</td><td><a href=\"".get_permalink()."\">". get_the_title() ."</a></td><td>".get_post_meta(get_the_ID(),"_refactord-datepicker",true)."</td>\n";
-	  	endwhile; 
+	  	endwhile;
 		$listing.="</table>";
-		wp_reset_query(); 
+		wp_reset_query();
 		return $listing;
 	}
-	
+
+	// functionality for generting the AZ directory
+	public function show_directory() {
+
+		delete_transient('norfolk_az_directory');
+
+		if ( false === ( $directory = get_transient( 'norfolk_az_directory' ) ) ) :
+
+			$tags = get_tags( array('orderby' => 'name', 'order' => 'ASC'));
+			foreach($tags as $tag) {
+				$tagitem[$i]['key'] = $i;
+				$tagitem[$i]['url'] = get_tag_link($tag->term_id);
+				$tagitem[$i]['name'] = ucwords($tag->name);
+				$tagitem[$i]['count'] = $tag->count;
+				$i++;
+			}
+
+			$output = "<h2 id='0-9'>0-9</h2>";
+			$output.= "<ul class='az_directory_listing'>";
+			foreach($tagitem as $tag) {
+				if(is_numeric(substr($tag['name'],0,1))) {
+					$output.= "<li><a href=\"".$tag['url']."\">" . $tag['name'] . "</a> ";
+					if($tag->count > 1) $output.= "(".$tag['count']." related pages)</li>";
+					else $output.= "(".$tag['count']." related page)</li>";
+					unset($tagitem[$tag['key']]);
+				}
+				else break;
+			}
+			$output.= "</ul></li>";
+
+			$alphalist=array();
+			for ($i=65; $i<=90; $i++) {
+				$lioutput = "<h2 id='" . chr($i) . "'>".chr($i)."</h2>";
+				$lioutput.= "<ul class='az_directory_listing'>";
+				$mycount=0;
+
+				foreach($tagitem as $tag) {
+					if(substr($tag['name'],0,1)==chr($i)) {
+						$lioutput.="<li><a href=\"".$tag['url']."\">" . $tag['name'] . "</a> ";
+						if($tag['count'] > 1) $lioutput.= "(".$tag['count']." related pages)</li>";
+						else $lioutput.="(".$tag['count']." related page)</li>";
+						unset($tagitem[$tag['key']]);
+						$mycount++;
+					}
+					else break(1);
+				}
+				if($mycount>0) {
+					$alphalist[]=chr($i);
+					$output.= $lioutput;
+					$output.= "</ul></li>";
+				}
+			}
+
+			$heading = "<ul class=\"az_directory_header\">";
+			$heading.= "<li><a href=\"#0-9\">0-9</a></li>";
+			$select = '<select class="form-control az_directory">';
+			$select.= '<option value="">' . __( 'Jump To...', $this->plugin_name ) . '</option>';
+			$select.= '<option value="0-9">0-9</option>';
+			for($x=0; $x<sizeof($alphalist);$x++) :
+				$heading.= "<li><a href=\"#".$alphalist[$x]."\">".$alphalist[$x]."</a></li>";
+				$select.=  "<option value=\"".$alphalist[$x]."\">".$alphalist[$x]."</option>";
+			endfor;
+			$select.='</select>';
+			$heading.="</ul>";
+
+			$directory = $heading . $select . $output;
+
+			set_transient( 'norfolk_az_directory', $directory , WEEK_IN_SECONDS );
+
+		endif; // end of
+
+		return $directory;
+	}
+
 }

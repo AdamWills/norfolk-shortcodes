@@ -154,6 +154,8 @@ class Norfolk_Shortcodes {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		$this->loader->add_action( 'save_post', $plugin_admin, 'delete_az_directory_transient' );
+
 	}
 
 	/**
@@ -176,6 +178,7 @@ class Norfolk_Shortcodes {
 		$this->loader->add_shortcode( 'row', $plugin_public, 'layout_row' );
 		$this->loader->add_shortcode( 'one_third', $plugin_public, 'layout_one_third' );
 		$this->loader->add_shortcode( 'two_third', $plugin_public, 'layout_two_third' );
+
 		$this->loader->add_shortcode( 'one_half', $plugin_public, 'layout_one_half' );
 		$this->loader->add_shortcode( 'one_quarter', $plugin_public, 'layout_one_quarter' );
 		$this->loader->add_shortcode( 'three_quarters', $plugin_public, 'layout_three_quarters' );
@@ -187,8 +190,10 @@ class Norfolk_Shortcodes {
 		$this->loader->add_shortcode( 'showsurplusproperties', $plugin_public, 'show_surplus_properties' );
 		$this->loader->add_shortcode( 'showbiddingops', $plugin_public, 'show_bidding_opportunities' );
 
+		$this->loader->add_shortcode( 'az-directory', $plugin_public, 'show_directory' );
+
 		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 	}
 

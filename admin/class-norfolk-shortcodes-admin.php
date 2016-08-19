@@ -100,4 +100,8 @@ class Norfolk_Shortcodes_Admin {
 
 	}
 
+	public function delete_az_directory_transient() {
+		delete_transient('norfolk_az_directory');
+	}
+
 }
