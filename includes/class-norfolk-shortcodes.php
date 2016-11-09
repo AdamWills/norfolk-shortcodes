@@ -156,6 +156,9 @@ class Norfolk_Shortcodes {
 
 		$this->loader->add_action( 'save_post', $plugin_admin, 'delete_az_directory_transient' );
 
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'add_docnum_metaboxes' );
+
+		$this->loader->add_action( 'save_post', $plugin_admin, 'wpt_save_docnum_meta', 1, 2 ); // save the custom fields
 	}
 
 	/**
