@@ -148,6 +148,14 @@ class Norfolk_Shortcodes_Public {
 		return $returntext;
 	}
 
+	public function show_main_offices() {
+		$returntext = '<h2>Customer Service Centres</h2>';
+		$returntext .= ShowLABAddress();
+		$returntext .= ShowDABAddress();
+		$returntext .= ShowCABAddress();
+		return $returntext;
+	}
+
 	public function layout_row( $atts, $content = null ) {
 		return '<div class="row">' . do_shortcode( $content ) . '</div>';
 	}
@@ -252,6 +260,7 @@ class Norfolk_Shortcodes_Public {
 		if ( false === ( $directory = get_transient( 'norfolk_az_directory' ) ) ) :
 
 			$tags = get_tags( array('orderby' => 'name', 'order' => 'ASC'));
+			$i = 0;
 			foreach($tags as $tag) {
 				$tagitem[$i]['key'] = $i;
 				$tagitem[$i]['url'] = get_tag_link($tag->term_id);
@@ -265,7 +274,7 @@ class Norfolk_Shortcodes_Public {
 			foreach($tagitem as $tag) {
 				if(is_numeric(substr($tag['name'],0,1))) {
 					$output.= "<li><a href=\"".$tag['url']."\">" . $tag['name'] . "</a> ";
-					if($tag->count > 1) $output.= "(".$tag['count']." related pages)</li>";
+					if($tag['count'] > 1) $output.= "(".$tag['count']." related pages)</li>";
 					else $output.= "(".$tag['count']." related page)</li>";
 					unset($tagitem[$tag['key']]);
 				}
